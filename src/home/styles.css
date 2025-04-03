@@ -1,0 +1,8 @@
+*, ::after, ::before {
+    position: relative;
+    box-sizing: border-box;
+}
+
+.nav-btn {
+    padding: 4px 8px;
+}
