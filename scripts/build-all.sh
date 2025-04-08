@@ -2,7 +2,7 @@
 rm -rf ./build
 mkdir ./build
 dirs=$(find ./src -depth 1 -type d ! -name "template" ! -name "home") 
-cp ./src/home/* ./build/
+cp -R ./src/home/ ./build/
 dirs=${dirs//\.\/src\//}
 echo $dirs
 
@@ -15,7 +15,7 @@ for dir in $(echo "${dirs[@]}")
 do
     echo creating $dir
     mkdir ./build/$dir
-    cp ./src/$dir/static/* ./build/$dir/
+    cp -R ./src/$dir/static/ ./build/$dir/
     npx webpack --env=side=$dir --env=mode=production --env=buildAll=true
 
     injected_html+="<a class=\"$button_class\" href=\"./$dir/index.html\" target=\"_self\" >$dir</a>\n\t\t"
