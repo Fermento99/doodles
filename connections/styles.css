@@ -1,0 +1,108 @@
+*,
+::after,
+::before {
+  position: relative;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.controls {
+  position: absolute;
+  z-index: 2;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: row;
+}
+
+.controls img {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.controls > span {
+  padding: 0.5rem;
+  cursor: pointer;
+  transition: ease-out 0.1s;
+  opacity: 0.6;
+  user-select: none;
+}
+
+.controls > span:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
+}
+
+.controls > span:active {
+  opacity: 1;
+  transform: scale(0.9);
+  transition: 0s;
+}
+
+#display {
+  height: 100%;
+  width: 100%;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 80%;
+  max-width: 320px;
+}
+
+.form-container h2 {
+  margin-top: 0;
+}
+
+.input-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.input-row input {
+  width: 5rem;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.actions > button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+}
+
+#settings-modal {
+  position: absolute;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.4);
+}
