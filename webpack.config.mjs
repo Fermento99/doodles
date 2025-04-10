@@ -1,6 +1,8 @@
-const path = require('path');
+import path from 'path';
 
-module.exports = ({ side, mode, buildAll }) => ({
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
+
+export default ({ side, mode, buildAll }) => ({
   mode: mode,
   entry: `./src/${side}/src/index.ts`,
   resolve: {
