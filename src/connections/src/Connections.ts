@@ -1,16 +1,19 @@
 import { Drawable } from './displayUtils';
 import { CtxHelper } from './ctxUtils';
 
-type Vector = { x: number; y: number };
+interface Vector {
+  x: number;
+  y: number;
+}
 
 type Segment = [Vector, Vector];
 
-type ConnectionOptions = {
+interface ConnectionOptions {
   pointCount: number;
   radius: number;
   minSpeed: number;
   maxSpeed: number;
-};
+}
 
 class Connections implements Drawable {
   points: Point[] = [];
@@ -26,7 +29,7 @@ class Connections implements Drawable {
     this._dimmentions = { x: display.width, y: display.height };
     this._ctxHelper = new CtxHelper(display.getContext('2d')!);
 
-    window.addEventListener('resize', e => {
+    window.addEventListener('resize', () => {
       this._dimmentions = { x: display.width, y: display.height };
       this._ctxHelper = new CtxHelper(display.getContext('2d')!);
     });
@@ -34,43 +37,45 @@ class Connections implements Drawable {
     this.setup();
   }
 
-  drawFrame(timeElapsed: number) {
+  drawFrame(timeElapsed: number): void {
     this.clear();
     this.draw();
     this.movePoints(this._lastTime ? timeElapsed - this._lastTime : 0);
     this._lastTime = timeElapsed;
   }
 
-  pause() {
+  pause(): void {
     this._lastTime = undefined;
   }
 
-  setOptions(options: ConnectionOptions) {
+  setOptions(options: ConnectionOptions): void {
     this.pointCount = options.pointCount;
     this.radius = options.radius;
     this.minSpeed = options.minSpeed;
     this.maxSpeed = options.maxSpeed;
   }
 
-  clear() {
+  clear(): void {
     this._ctxHelper.clear(this._dimmentions);
   }
 
-  draw() {
-    this.getConnections().forEach(segment =>
-      this._ctxHelper.drawSegment(segment)
-    );
-    this.points.forEach(({ position }) => this._ctxHelper.drawPoint(position));
+  draw(): void {
+    this.getConnections().forEach(segment => {
+      this._ctxHelper.drawSegment(segment);
+    });
+    this.points.forEach(({ position }) => {
+      this._ctxHelper.drawPoint(position);
+    });
   }
 
-  setup() {
+  setup(): void {
     this.points = Array.from(
       { length: this.pointCount },
       () => new Point(this._dimmentions, this.minSpeed, this.maxSpeed)
     );
   }
 
-  movePoints(deltaTime: number) {
+  movePoints(deltaTime: number): void {
     const time = deltaTime / 1000;
     this.points.forEach(point => {
       point.position.x += time * point.velocity.x;
@@ -88,7 +93,7 @@ class Connections implements Drawable {
       for (let j = i + 1; j < this.pointCount; j++) {
         const b = this.points[j];
         const connection = this.isConnected(a, b);
-        if (connection) segments?.push(...connection);
+        if (connection) segments.push(...connection);
       }
     }
 
@@ -102,14 +107,11 @@ class Connections implements Drawable {
   }
 }
 
-const length = (...segments: Segment[]): number => {
-  return segments.reduce((acc: number, next: Segment) => {
-    const dx = next[0].x - next[1].x;
-    const dy = next[0].y - next[1].y;
-    acc += Math.pow(Math.pow(dx, 2) + Math.pow(dy, 2), 0.5);
+const length = (segment: Segment): number => {
+  const dx = segment[0].x - segment[1].x;
+  const dy = segment[0].y - segment[1].y;
 
-    return acc;
-  }, 0);
+  return Math.pow(Math.pow(dx, 2) + Math.pow(dy, 2), 0.5);
 };
 
 class Point {
@@ -130,7 +132,7 @@ class Point {
     this.velocity = { x: dx * dxs, y: dy * dys };
   }
 
-  checkBorderCollision(dimmentions: Vector) {
+  checkBorderCollision(dimmentions: Vector): void {
     if (this.position.x > dimmentions.x) {
       this.position.x = 2 * dimmentions.x - this.position.x;
       this.velocity.x *= -1;
@@ -150,4 +152,5 @@ class Point {
   }
 }
 
-export { Connections, Vector, Point, Segment };
+export type { Vector, Segment };
+export { Connections, Point };

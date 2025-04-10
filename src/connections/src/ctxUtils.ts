@@ -1,4 +1,4 @@
-import { Segment, Point, Vector } from './Connections';
+import { Segment, Vector } from './Connections';
 
 class CtxHelper {
   _ctx: CanvasRenderingContext2D;
@@ -11,11 +11,11 @@ class CtxHelper {
     this._ctx = ctx;
   }
 
-  clear(dimmentions: Vector) {
+  clear(dimmentions: Vector): void {
     this._ctx.clearRect(0, 0, dimmentions.x, dimmentions.y);
   }
 
-  drawPoint(point: Vector) {
+  drawPoint(point: Vector): void {
     this._ctx.beginPath();
     this._ctx.fillStyle = this.pointColor;
     this._ctx.arc(point.x, point.y, this.pointRadius, 0, Math.PI * 2, true);
@@ -23,7 +23,7 @@ class CtxHelper {
     this._ctx.closePath();
   }
 
-  drawSegment(segment: Segment) {
+  drawSegment(segment: Segment): void {
     this._ctx.beginPath();
     this._ctx.strokeStyle = this.segmentColor;
     this._ctx.lineWidth = this.segmentWidth;
