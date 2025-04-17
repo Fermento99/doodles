@@ -48,9 +48,9 @@ class AnimationController {
   loop(startTime: number): void {
     if (this._paused) {
       this._paused = false;
-      this._drawing!.drawFrame(performance.now());
+      this._drawing?.drawFrame(performance.now());
     } else {
-      this._drawing!.drawFrame(startTime);
+      this._drawing?.drawFrame(startTime);
     }
 
     const wait = this._frameTime - performance.now() + startTime;
@@ -69,7 +69,7 @@ class AnimationController {
   }
 
   stop(): void {
-    this._drawing!.pause();
+    this._drawing?.pause();
 
     if (this._animationFrame) {
       cancelAnimationFrame(this._animationFrame);
