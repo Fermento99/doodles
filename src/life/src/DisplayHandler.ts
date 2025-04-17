@@ -3,7 +3,6 @@ import { Point } from './types';
 class DisplayHandler {
   cellSize: Point;
   _display: HTMLCanvasElement;
-  _dimentions: Point = { x: 0, y: 0 };
   _ctx: CanvasRenderingContext2D;
   _drawing = false;
   _lastDrawn?: Point;
@@ -13,7 +12,6 @@ class DisplayHandler {
     this._display = display;
     this._ctx = display.getContext('2d')!;
     this.cellSize = { x: 10, y: 10 };
-    this.setSize({ x: true, y: true });
 
     display.addEventListener('mousedown', (event: MouseEvent) => {
       this.setDrawingMode(true);
@@ -74,8 +72,8 @@ class DisplayHandler {
     }
   }
 
-  getMaxDimentions(): Point {
-    return { x: this.getFullWidth(), y: this.getFullHeight() };
+  getDimentions(): Point {
+    return { x: this._display.width / this.cellSize.x, y: this._display.height / this.cellSize.y };
   }
 
   drawCell({ x, y }: Point): void {

@@ -40,4 +40,9 @@ nav {
   color: #000;
   background-color: #f6f930;
   font-family: monospace;
+  transition: ease-out 0.1s;
+}
+
+.nav-btn:hover {
+  transform: scale(1.1);
 }

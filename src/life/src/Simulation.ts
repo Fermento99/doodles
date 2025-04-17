@@ -14,16 +14,16 @@ interface SimulationOptions {
 class Simulation implements Drawable {
   randomChance = 0.2;
   _displayHandler: DisplayHandler;
-  _dimentions: Point;
+  _dimentions: Point = { x: 10, y: 10 };
   _cells: Point[];
 
   constructor(displayHandler: DisplayHandler) {
+    displayHandler.setSize(this._dimentions);
     displayHandler.drawHandler = (point: Point): void => {
       this.handleDraw(point);
     };
 
     this._displayHandler = displayHandler;
-    this._dimentions = displayHandler.getMaxDimentions();
     this._cells = [];
   }
 
@@ -44,7 +44,8 @@ class Simulation implements Drawable {
     this.randomChance = randomChance;
     this._displayHandler.cellSize = { x: cellWidth, y: cellHeight };
     this._displayHandler.setSize({ x: fullWidth || gridWidth, y: fullHeight || gridHeight });
-    this._dimentions = this._displayHandler.getMaxDimentions();
+
+    this._dimentions = this._displayHandler.getDimentions();
     this.randomize();
   }
 
