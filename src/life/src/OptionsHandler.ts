@@ -62,6 +62,7 @@ const setUpActions = (animationController: AnimationController, simulation: Simu
     const gridHeight = parseInt((<HTMLInputElement>document.getElementById('grid-height')).value);
     const fullWidth = (<HTMLInputElement>document.getElementById('full-width')).checked;
     const fullHeight = (<HTMLInputElement>document.getElementById('full-height')).checked;
+    const monochromatic = (<HTMLInputElement>document.getElementById('monochromatic')).checked;
 
     simulation.setOptions({
       randomChance,
@@ -71,6 +72,7 @@ const setUpActions = (animationController: AnimationController, simulation: Simu
       gridHeight,
       fullWidth,
       fullHeight,
+      monochromatic,
     });
   });
 

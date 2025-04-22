@@ -1,10 +1,12 @@
-import { Point } from './types';
+import { Point, Color } from './types';
+import { Cell } from './Simulation';
 
 class DisplayHandler {
+  monochromatic = true;
   cellSize: Point;
+  _drawing = false;
   _display: HTMLCanvasElement;
   _ctx: CanvasRenderingContext2D;
-  _drawing = false;
   _lastDrawn?: Point;
   drawHandler?: (point: Point) => void;
 
@@ -76,10 +78,16 @@ class DisplayHandler {
     return { x: this._display.width / this.cellSize.x, y: this._display.height / this.cellSize.y };
   }
 
-  drawCell({ x, y }: Point): void {
+  drawCell({ position: { x, y }, color }: Cell): void {
     const { x: cellWidth, y: cellHeight } = this.cellSize;
-    this._ctx.fillStyle = '#111';
+    this._ctx.fillStyle = this._convertColor(color);
     this._ctx.fillRect(cellWidth * x, cellHeight * y, cellWidth, cellHeight);
+  }
+
+  _convertColor({ r, g, b }: Color): string {
+    return this.monochromatic
+      ? 'rgba(0,0,0)'
+      : `rgb(${r.toString()}, ${g.toString()}, ${b.toString()})`;
   }
 
   clear(): void {

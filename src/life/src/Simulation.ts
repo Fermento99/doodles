@@ -1,5 +1,5 @@
 import { DisplayHandler } from './DisplayHandler';
-import { Point, Drawable } from './types';
+import { Point, Drawable, Color } from './types';
 
 interface SimulationOptions {
   randomChance: number;
@@ -9,13 +9,14 @@ interface SimulationOptions {
   fullWidth: boolean;
   gridHeight: number;
   fullHeight: boolean;
+  monochromatic: boolean;
 }
 
 class Simulation implements Drawable {
   randomChance = 0.2;
   _displayHandler: DisplayHandler;
   _dimentions: Point = { x: 10, y: 10 };
-  _cells: Point[];
+  _cells: Cell[];
 
   constructor(displayHandler: DisplayHandler) {
     displayHandler.setSize(this._dimentions);
@@ -40,10 +41,12 @@ class Simulation implements Drawable {
     fullWidth,
     gridHeight,
     fullHeight,
+    monochromatic,
   }: SimulationOptions): void {
     this.randomChance = randomChance;
     this._displayHandler.cellSize = { x: cellWidth, y: cellHeight };
     this._displayHandler.setSize({ x: fullWidth || gridWidth, y: fullHeight || gridHeight });
+    this._displayHandler.monochromatic = monochromatic;
 
     this._dimentions = this._displayHandler.getDimentions();
     this.randomize();
@@ -63,9 +66,11 @@ class Simulation implements Drawable {
   }
 
   swapCell(point: Point): void {
-    const cellIndex = this._cells.findIndex(cell => point.x === cell.x && point.y === cell.y);
+    const cellIndex = this._cells.findIndex(cell => cell.isAt(point));
     if (cellIndex === -1) {
-      this._cells.push(point);
+      const newCell = new Cell(point);
+      newCell.randomizeColor();
+      this._cells.push(newCell);
     } else {
       this._cells.splice(cellIndex, 1);
     }
@@ -77,7 +82,9 @@ class Simulation implements Drawable {
     for (let x = 0; x < this._dimentions.x; x++) {
       for (let y = 0; y < this._dimentions.y; y++) {
         if (Math.random() < this.randomChance) {
-          this._cells.push({ x, y });
+          const newCell = new Cell({ x, y });
+          newCell.randomizeColor();
+          this._cells.push(newCell);
         }
       }
     }
@@ -95,17 +102,19 @@ class Simulation implements Drawable {
     const nextGen = new Map<number, Cell>();
 
     this._cells.forEach(oldCell => {
-      const oldCellId = this.getCellId(oldCell);
-      const neighbours = this.getNeighbours(oldCell);
+      const oldCellId = this.getCellId(oldCell.position);
+      const neighbours = this.getNeighbours(oldCell.position);
 
       neighbours.forEach(point => {
         const id = this.getCellId(point);
         const cell = nextGen.get(id);
 
         if (cell) {
-          cell.addNeighbour();
+          cell.addNeighbour(oldCell.color);
         } else {
-          nextGen.set(id, new Cell(point));
+          const newCell = new Cell(point);
+          newCell.addNeighbour(oldCell.color);
+          nextGen.set(id, newCell);
         }
       });
 
@@ -113,15 +122,21 @@ class Simulation implements Drawable {
 
       if (nextCell) {
         nextCell.living = true;
+        nextCell.color = oldCell.color;
       } else {
-        nextGen.set(oldCellId, new Cell(oldCell, true));
+        const newCell = new Cell(oldCell.position);
+        newCell.living = true;
+        newCell.color = oldCell.color;
+        nextGen.set(oldCellId, newCell);
       }
     });
 
     this._cells = [];
     nextGen.forEach(cell => {
-      if (cell.neighbourCount === 3 || (cell.neighbourCount === 2 && cell.living)) {
-        this._cells.push(cell.position);
+      const neighbourCount = cell.getNeighbourCount();
+      if (neighbourCount === 3 || (neighbourCount === 2 && cell.living)) {
+        cell.calculateColor();
+        this._cells.push(cell);
       }
     });
   }
@@ -173,18 +188,56 @@ class Simulation implements Drawable {
 
 class Cell {
   position: Point;
-  neighbourCount: number;
+  neighbourColors: Color[];
+  color: Color;
   living: boolean;
 
-  constructor(position: Point, living = false) {
+  constructor(position: Point) {
     this.position = position;
-    this.neighbourCount = living ? 0 : 1;
-    this.living = living;
+    this.neighbourColors = [];
+    this.color = { r: 0, g: 0, b: 0 };
+    this.living = false;
   }
 
-  addNeighbour(): void {
-    this.neighbourCount++;
+  isAt({ x, y }: Point): boolean {
+    return this.position.x === x && this.position.y === y;
+  }
+
+  addNeighbour(color: Color): void {
+    this.neighbourColors.push(color);
+  }
+
+  randomizeColor(): void {
+    this.color = {
+      r: this._randomColorValue(),
+      g: this._randomColorValue(),
+      b: this._randomColorValue(),
+    };
+  }
+
+  getNeighbourCount(): number {
+    return this.neighbourColors.length;
+  }
+
+  calculateColor(): void {
+    if (!this.living) {
+      this.neighbourColors.forEach(({ r, g, b }) => {
+        this.color.r += r;
+        this.color.g += g;
+        this.color.b += b;
+      });
+
+      const componentLength = this.neighbourColors.length;
+      let component: keyof Color;
+      for (component in this.color) {
+        this.color[component] = Math.round(this.color[component] / componentLength);
+      }
+    }
+  }
+
+  _randomColorValue(): number {
+    return Math.floor(Math.pow(Math.random() - 0.5, 2) * 4 * 190) + 63;
   }
 }
 
-export { Simulation };
+export { Simulation, Cell };

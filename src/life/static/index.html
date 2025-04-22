@@ -51,9 +51,9 @@
       <div class="input-row">
         <span class="input-label">grid width:</span>
         <div class="optional-checkbox">
-          <input id="grid-width" disabled type="number" value="100" min="1" step="1" />
+          <input id="grid-width" disabled type="number" value="10" min="1" step="1" />
           <div class="checkbox">
-            <input id="full-width" type="checkbox" name="full-width" checked />
+            <input id="full-width" type="checkbox" name="full-width" />
             <label for="full-width">full width</label>
           </div>
         </div>
@@ -61,12 +61,16 @@
       <div class="input-row">
         <span class="input-label">grid height:</span>
         <div class="optional-checkbox">
-          <input id="grid-height" disabled type="number" value="100" min="1" step="1" />
+          <input id="grid-height" disabled type="number" value="10" min="1" step="1" />
           <div class="checkbox">
-            <input id="full-height" type="checkbox" name="full-height" checked="true" />
+            <input id="full-height" type="checkbox" name="full-height" />
             <label for="full-height">full height</label>
           </div>
         </div>
+      </div>
+      <div class="input-row">
+        <span class="input-label">monochromatic:</span>
+        <input id="monochromatic" type="checkbox" checked />
       </div>
       <div class="actions">
         <button id="close">close</button>

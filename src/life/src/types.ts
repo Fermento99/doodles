@@ -7,4 +7,10 @@ interface Point {
   y: number;
 }
 
-export type { Drawable, Point };
+interface Color {
+  r: number;
+  g: number;
+  b: number;
+}
+
+export type { Drawable, Point, Color };
