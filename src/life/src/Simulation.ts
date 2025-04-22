@@ -92,26 +92,29 @@ class Simulation implements Drawable {
   }
 
   simulationStep(): void {
-    const nextGen: Cell[] = [];
+    const nextGen = new Map<number, Cell>();
 
     this._cells.forEach(oldCell => {
+      const oldCellId = this.getCellId(oldCell);
       const neighbours = this.getNeighbours(oldCell);
+
       neighbours.forEach(point => {
-        const cell = nextGen.find(cell => cell.equals(point));
+        const id = this.getCellId(point);
+        const cell = nextGen.get(id);
 
         if (cell) {
           cell.addNeighbour();
         } else {
-          nextGen.push(new Cell(point));
+          nextGen.set(id, new Cell(point));
         }
       });
 
-      const nextCell = nextGen.find(cell => cell.equals(oldCell));
+      const nextCell = nextGen.get(oldCellId);
 
       if (nextCell) {
         nextCell.living = true;
       } else {
-        nextGen.push(new Cell(oldCell, true));
+        nextGen.set(oldCellId, new Cell(oldCell, true));
       }
     });
 
@@ -121,6 +124,10 @@ class Simulation implements Drawable {
         this._cells.push(cell.position);
       }
     });
+  }
+
+  getCellId(point: Point): number {
+    return point.x * this._dimentions.x + point.y;
   }
 
   getNeighbours(cell: Point): Point[] {
@@ -177,10 +184,6 @@ class Cell {
 
   addNeighbour(): void {
     this.neighbourCount++;
-  }
-
-  equals(other: Point): boolean {
-    return this.position.x === other.x && this.position.y === other.y;
   }
 }
 

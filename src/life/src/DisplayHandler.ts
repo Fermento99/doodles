@@ -78,17 +78,12 @@ class DisplayHandler {
 
   drawCell({ x, y }: Point): void {
     const { x: cellWidth, y: cellHeight } = this.cellSize;
-    this._ctx.beginPath();
     this._ctx.fillStyle = '#111';
     this._ctx.fillRect(cellWidth * x, cellHeight * y, cellWidth, cellHeight);
-    this._ctx.closePath();
   }
 
   clear(): void {
-    this._ctx.beginPath();
-    this._ctx.fillStyle = '#fff';
-    this._ctx.fillRect(0, 0, this._display.width, this._display.height);
-    this._ctx.closePath();
+    this._ctx.clearRect(0, 0, this._display.width, this._display.height);
   }
 }
 
