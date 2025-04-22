@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles.css">
+  <title>Life</title>
+</head>
+
+<body>
+  <noscript>Please enable Javascript to see the page</noscript>
+  <div class="controls">
+    <span id="settings">
+      <img src="./assets/settings.svg" />
+    </span>
+    <span id="random">
+      <img src="./assets/random.svg" />
+    </span>
+    <span id="reset">
+      <img src="./assets/reset.svg" />
+    </span>
+    <span id="pause" simulation-speed="0">
+      <img src="./assets/pause.svg" />
+    </span>
+    <span id="play" class="active" simulation-speed="1">
+      <img src="./assets/play.svg" />
+    </span>
+    <span id="fast-forward" simulation-speed="2">
+      <img src="./assets/fast-forward.svg" />
+    </span>
+    <span id="fast-forward-x3" simulation-speed="3">
+      <img src="./assets/fast-forward-x3.svg" />
+    </span>
+  </div>
+  <div id="settings-modal" class="hidden">
+    <div class="form-container">
+      <h2>Options</h2>
+      <div class="input-row">
+        <span class="input-label">randomize life chance:</span>
+        <input id="random-chance" type="number" value="0.2" min="0" max="1" step="0.02" />
+      </div>
+      <div class="input-row">
+        <span class="input-label">cell width (px):</span>
+        <input id="cell-width" type="number" value="10" min="1" step="1" />
+      </div>
+      <div class="input-row">
+        <span class="input-label">cell height (px):</span>
+        <input id="cell-height" type="number" value="10" min="1" step="1" />
+      </div>
+      <div class="input-row">
+        <span class="input-label">grid width:</span>
+        <div class="optional-checkbox">
+          <input id="grid-width" disabled type="number" value="10" min="1" step="1" />
+          <div class="checkbox">
+            <input id="full-width" type="checkbox" name="full-width" />
+            <label for="full-width">full width</label>
+          </div>
+        </div>
+      </div>
+      <div class="input-row">
+        <span class="input-label">grid height:</span>
+        <div class="optional-checkbox">
+          <input id="grid-height" disabled type="number" value="10" min="1" step="1" />
+          <div class="checkbox">
+            <input id="full-height" type="checkbox" name="full-height" />
+            <label for="full-height">full height</label>
+          </div>
+        </div>
+      </div>
+      <div class="input-row">
+        <span class="input-label">monochromatic:</span>
+        <input id="monochromatic" type="checkbox" checked />
+      </div>
+      <div class="actions">
+        <button id="close">close</button>
+        <button id="save">save</button>
+      </div>
+    </div>
+  </div>
+  <canvas id="display"></canvas>
+  <script src="./index.bundle.js"></script>
+</body>
+
+</html>
