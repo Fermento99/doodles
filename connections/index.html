@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles.css">
+  <title>Connections</title>
+</head>
+
+<body>
+  <noscript>Please enable Javascript to see the page</noscript>
+  <div class="controls">
+    <span id="reset">
+      <img src="./assets/reset.svg" />
+    </span>
+    <span id="play">
+      <img src="./assets/play.svg" />
+    </span>
+    <span id="pause">
+      <img src="./assets/pause.svg" />
+    </span>
+    <span id="options">
+      <img src="./assets/settings.svg" />
+    </span>
+  </div>
+  <canvas id="display"></canvas>
+  <div id="settings-modal" class="hidden">
+    <div class="form-container">
+      <h2>Options</h2>
+      <div class="input-row">
+        <span>point count:</span>
+        <input id="point-count" type="number" value="20" min="0" step="" />
+      </div>
+      <div class="input-row">
+        <span>connection radius (px):</span>
+        <input id="radius" type="number" value="250" min="0" step="10" />
+      </div>
+      <div class="input-row">
+        <span>minimal speed (px/s):</span>
+        <input id="min-speed" type="number" value="20" min="0" step="5" />
+      </div>
+      <div class="input-row">
+        <span>maximal speed (px/s):</span>
+        <input id="max-speed" type="number" value="100" min="0" step="5" />
+      </div>
+      <div class="actions">
+        <button id="close">close</button>
+        <button id="save">save</button>
+      </div>
+    </div>
+  </div>
+  <script src="./index.bundle.js"></script>
+</body>
+
+</html>
