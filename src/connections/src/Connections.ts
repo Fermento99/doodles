@@ -1,5 +1,6 @@
 import { Drawable } from './displayUtils';
 import { CtxHelper } from './ctxUtils';
+import { DEFAULT_VALUES } from './defaultValues';
 
 interface Vector {
   x: number;
@@ -8,24 +9,32 @@ interface Vector {
 
 type Segment = [Vector, Vector];
 
-interface ConnectionOptions {
+export interface ConnectionOptions {
   pointCount: number;
   radius: number;
   minSpeed: number;
   maxSpeed: number;
+  pointColor: string;
+  segmentColor: string;
+  backgroundColor: string;
 }
 
 class Connections implements Drawable {
   points: Point[] = [];
-  pointCount = 20;
-  radius = 250;
-  minSpeed = 50;
-  maxSpeed = 120;
+  pointCount = DEFAULT_VALUES.pointCount;
+  radius = DEFAULT_VALUES.radius;
+  minSpeed = DEFAULT_VALUES.minSpeed;
+  maxSpeed = DEFAULT_VALUES.maxSpeed;
   _dimensions: Vector;
   _ctxHelper: CtxHelper;
   _lastTime?: number;
+  _display: HTMLCanvasElement;
+
 
   constructor(display: HTMLCanvasElement) {
+    display.style = `background-color: ${DEFAULT_VALUES.backgroundColor}`;
+    this._display = display;
+
     this._dimensions = { x: display.width, y: display.height };
     this._ctxHelper = new CtxHelper(display.getContext('2d')!);
 
@@ -53,6 +62,9 @@ class Connections implements Drawable {
     this.radius = options.radius;
     this.minSpeed = options.minSpeed;
     this.maxSpeed = options.maxSpeed;
+    this._ctxHelper.pointColor = options.pointColor;
+    this._ctxHelper.segmentColor = options.segmentColor;
+    this._display.style = `background-color: ${options.backgroundColor}`;
   }
 
   clear(): void {
@@ -126,7 +138,7 @@ class Point {
   randomizePosition(dimensions: Vector): Vector {
     const x = Math.random() * (dimensions.x - 1);
     const y = Math.random() * (dimensions.y - 1);
-    
+
     return { x, y };
   }
 

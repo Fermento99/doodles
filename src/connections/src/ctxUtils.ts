@@ -1,11 +1,12 @@
 import { Segment, Vector } from './Connections';
+import { DEFAULT_VALUES } from './defaultValues';
 
 class CtxHelper {
   _ctx: CanvasRenderingContext2D;
   pointRadius = 3;
-  pointColor = 'gray';
+  pointColor = DEFAULT_VALUES.pointColor;
   segmentWidth = 2;
-  segmentColor = '#aaa';
+  segmentColor = DEFAULT_VALUES.segmentColor;
 
   constructor(ctx: CanvasRenderingContext2D) {
     this._ctx = ctx;

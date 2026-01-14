@@ -19,6 +19,10 @@ body {
   right: 1rem;
   display: flex;
   flex-direction: row;
+  background-color: #888888;
+  opacity: .6;
+  padding: .5rem;
+  border-radius: 8px;
 }
 
 .controls img {
@@ -30,7 +34,6 @@ body {
   padding: 0.5rem;
   cursor: pointer;
   transition: ease-out 0.1s;
-  opacity: 0.6;
   user-select: none;
 }
 

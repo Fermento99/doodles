@@ -1,7 +1,22 @@
-import { Connections } from './Connections';
+import { ConnectionOptions, Connections } from './Connections';
+import { DEFAULT_VALUES } from './defaultValues';
 import { AnimationController } from './displayUtils';
 
 const setupActions = (connections: Connections, animationController: AnimationController): void => {
+  const inputs: Record<keyof ConnectionOptions, HTMLInputElement> = {
+    pointCount: <HTMLInputElement>document.getElementById('point-count'),
+    radius: <HTMLInputElement>document.getElementById('radius'),
+    minSpeed: <HTMLInputElement>document.getElementById('min-speed'),
+    maxSpeed: <HTMLInputElement>document.getElementById('max-speed'),
+    pointColor: <HTMLInputElement>document.getElementById('point-color'),
+    segmentColor: <HTMLInputElement>document.getElementById('segment-color'),
+    backgroundColor: <HTMLInputElement>document.getElementById('background-color'),
+  };
+
+  Object.entries(inputs).forEach(([key, input]) => {
+    input.value = DEFAULT_VALUES[<keyof ConnectionOptions>key].toString();
+  })
+
   document.getElementById('reset')?.addEventListener('click', () => {
     connections.setup();
     connections.drawFrame(0);
@@ -20,12 +35,23 @@ const setupActions = (connections: Connections, animationController: AnimationCo
     document.getElementById('settings-modal')?.classList.add('hidden');
   });
   document.getElementById('save')?.addEventListener('click', () => {
-    const pointCount = parseInt((<HTMLInputElement>document.getElementById('point-count')).value);
-    const radius = parseInt((<HTMLInputElement>document.getElementById('radius')).value);
-    const minSpeed = parseInt((<HTMLInputElement>document.getElementById('min-speed')).value);
-    const maxSpeed = parseInt((<HTMLInputElement>document.getElementById('max-speed')).value);
+    const pointCount = parseInt(inputs.pointCount.value);
+    const radius = parseInt(inputs.radius.value);
+    const minSpeed = parseInt(inputs.minSpeed.value);
+    const maxSpeed = parseInt(inputs.maxSpeed.value);
+    const pointColor = inputs.pointColor.value;
+    const segmentColor = inputs.segmentColor.value;
+    const backgroundColor = inputs.backgroundColor.value;
 
-    connections.setOptions({ pointCount, radius, minSpeed, maxSpeed });
+    connections.setOptions({
+      pointCount,
+      radius,
+      minSpeed,
+      maxSpeed,
+      pointColor,
+      segmentColor,
+      backgroundColor,
+    });
     connections.setup();
   });
 };
