@@ -19,18 +19,18 @@ class Connections implements Drawable {
   points: Point[] = [];
   pointCount = 20;
   radius = 250;
-  minSpeed = 20;
-  maxSpeed = 100;
-  _dimmentions: Vector;
+  minSpeed = 50;
+  maxSpeed = 120;
+  _dimensions: Vector;
   _ctxHelper: CtxHelper;
   _lastTime?: number;
 
   constructor(display: HTMLCanvasElement) {
-    this._dimmentions = { x: display.width, y: display.height };
+    this._dimensions = { x: display.width, y: display.height };
     this._ctxHelper = new CtxHelper(display.getContext('2d')!);
 
     window.addEventListener('resize', () => {
-      this._dimmentions = { x: display.width, y: display.height };
+      this._dimensions = { x: display.width, y: display.height };
       this._ctxHelper = new CtxHelper(display.getContext('2d')!);
     });
 
@@ -56,7 +56,7 @@ class Connections implements Drawable {
   }
 
   clear(): void {
-    this._ctxHelper.clear(this._dimmentions);
+    this._ctxHelper.clear(this._dimensions);
   }
 
   draw(): void {
@@ -71,7 +71,7 @@ class Connections implements Drawable {
   setup(): void {
     this.points = Array.from(
       { length: this.pointCount },
-      () => new Point(this._dimmentions, this.minSpeed, this.maxSpeed)
+      () => new Point(this._dimensions, this.minSpeed, this.maxSpeed)
     );
   }
 
@@ -81,7 +81,7 @@ class Connections implements Drawable {
       point.position.x += time * point.velocity.x;
       point.position.y += time * point.velocity.y;
 
-      point.checkBorderCollision(this._dimmentions);
+      point.checkBorderCollision(this._dimensions);
     });
   }
 
@@ -118,27 +118,36 @@ class Point {
   position: Vector;
   velocity: Vector;
 
-  constructor(dimmentions: Vector, minSpeed: number, maxSpeed: number) {
-    const x = Math.random() * (dimmentions.x - 1);
-    const y = Math.random() * (dimmentions.y - 1);
-
-    const speedRange = maxSpeed - minSpeed;
-    const dxs = Math.random() > 0.5 ? 1 : -1;
-    const dys = Math.random() > 0.5 ? 1 : -1;
-    const dx = Math.random() * speedRange + minSpeed;
-    const dy = Math.random() * speedRange + minSpeed;
-
-    this.position = { x, y };
-    this.velocity = { x: dx * dxs, y: dy * dys };
+  constructor(dimensions: Vector, minSpeed: number, maxSpeed: number) {
+    this.position = this.randomizePosition(dimensions);
+    this.velocity = this.randomizeVelocity(minSpeed, maxSpeed);
   }
 
-  checkBorderCollision(dimmentions: Vector): void {
-    if (this.position.x > dimmentions.x) {
-      this.position.x = 2 * dimmentions.x - this.position.x;
+  randomizePosition(dimensions: Vector): Vector {
+    const x = Math.random() * (dimensions.x - 1);
+    const y = Math.random() * (dimensions.y - 1);
+    
+    return { x, y };
+  }
+
+  randomizeVelocity(minSpeed: number, maxSpeed: number): Vector {
+    const speedRange = maxSpeed - minSpeed;
+    const speed = Math.random() * speedRange + minSpeed;
+    const angle = Math.random() * Math.PI * 2;
+
+    const dx = Math.cos(angle) * speed;
+    const dy = Math.sin(angle) * speed;
+
+    return { x: dx, y: dy };
+  }
+
+  checkBorderCollision(dimensions: Vector): void {
+    if (this.position.x > dimensions.x) {
+      this.position.x = 2 * dimensions.x - this.position.x;
       this.velocity.x *= -1;
     }
-    if (this.position.y > dimmentions.y) {
-      this.position.y = 2 * dimmentions.y - this.position.y;
+    if (this.position.y > dimensions.y) {
+      this.position.y = 2 * dimensions.y - this.position.y;
       this.velocity.y *= -1;
     }
     if (this.position.x < 0) {

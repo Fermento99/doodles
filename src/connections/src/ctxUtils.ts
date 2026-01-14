@@ -11,8 +11,8 @@ class CtxHelper {
     this._ctx = ctx;
   }
 
-  clear(dimmentions: Vector): void {
-    this._ctx.clearRect(0, 0, dimmentions.x, dimmentions.y);
+  clear(dimensions: Vector): void {
+    this._ctx.clearRect(0, 0, dimensions.x, dimensions.y);
   }
 
   drawPoint(point: Vector): void {
