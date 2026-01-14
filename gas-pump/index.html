@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">  <title>Gas Pump</title>
+</head>
+
+<body>
+  <div class="container container-inputs">
+    <div class="box">
+      <label for="personCount">Number of People</label>
+      <input id="personCount" type="number" step="1" min="1" />
+    </div>
+    <div class="box">
+      <label for="price">Gas Price</label>
+      <div class="value-unit-box">
+        <input id="price" type="number" step="0.01" min="0.01" />
+        <span class="unit">PLN/l</span>
+      </div>
+    </div>
+    <div class="box">
+      <label for="avgConsumption">Average Consumption</label>
+      <div class="value-unit-box">  
+        <input id="avgConsumption" type="number" step="0.1" min="0.1"/>
+        <span class="unit">l/100 km</span>
+      </div>
+    </div>
+    <div class="box">
+      <label for="distance">Distance</label>
+      <div class="value-unit-box">
+        <input id="distance" type="number" step="1" min="1" />
+        <span class="unit">km</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="container container-results">
+    <div class="box">
+      <span class="result-label">Distance cost:</span>
+      <div class="value-unit-box">
+        <span id="distance-cost">--</span>
+        <span class="unit">PLN/km</span>
+      </div>
+    </div>
+    <div class="box">
+      <span class="result-label">Distance cost per person:</span>
+      <div class="value-unit-box">
+        <span id="person-distance-cost">--</span>
+        <span class="unit">PLN/km</span>
+      </div>
+    </div>
+    <div class="box">
+      <span class="result-label">Total cost:</span>
+      <div class="value-unit-box">
+        <span id="total-cost">--</span>
+        <span class="unit">PLN</span>
+      </div>
+    </div>
+    <div class="box">
+      <span class="result-label">Cost per person:</span>
+      <div class="value-unit-box">
+        <span id="person-total-cost">--</span>
+        <span class="unit">PLN</span>
+      </div>
+    </div>
+  </div>
+
+  <noscript>Please enable Javascript to see the page</noscript>
+  <script src="./index.bundle.js"></script>
+</body>
+
+</html>
