@@ -1,0 +1,39 @@
+*,
+::after,
+::before {
+  position: relative;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Caveat', cursive;
+  color: white;
+  background-image: url(./assets/empty-blackboard.jpg);
+  background-position: center;
+  background-size: cover;
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  accent-color: #38A0E5;
+}
+
+label {
+  text-transform: capitalize;
+  font-size: 20px;
+}
+
+legend {
+  font-size: 22px;
+}
+
+button {
+  font-family: 'Caveat', cursive;
+  color: #fff;
+  font-weight: 700;
+  font-size: 22px;
+  background-color: #685550;
+  padding: 0.5rem 1rem;
+  border: #ddd solid 1px;
+  border-radius: 4px;
+}
+

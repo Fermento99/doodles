@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
+  <title>Math Teacher</title>
+</head>
+
+<body>
+  <section>
+    <form id="options">
+      <fieldset>
+        <legend>Learning Mode</legend>
+        <div>
+          <input type="radio" name="learning-mode" id="translation" value="translation" checked />
+          <label for="translation">translation</label>
+        </div>
+        <div>
+          <input type="radio" name="learning-mode" id="addition" value="addition" />
+          <label for="addition">addition</label>
+        </div>
+        <div>
+          <input type="radio" name="learning-mode" id="subtraction" value="subtraction" />
+          <label for="subtraction">subtraction</label>
+        </div>
+        <div>
+          <input type="radio" name="learning-mode" id="multiplication" value="multiplication" />
+          <label for="multiplication">multiplication</label>
+        </div>
+        <div>
+          <input type="radio" name="learning-mode" id="division" value="division" />
+          <label for="division">division</label>
+        </div>
+        <div>
+          <input type="radio" name="learning-mode" id="mix" value="mix" />
+          <label for="mix">mix</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Difficulty</legend>
+        <div>
+          <input type="radio" name="difficulty" id="easy" value="easy" checked />
+          <label for="easy">easy</label>
+        </div>
+        <div>
+          <input type="radio" name="difficulty" id="medium" value="medium" />
+          <label for="medium">medium</label>
+        </div>
+        <div>
+          <input type="radio" name="difficulty" id="hard" value="hard" />
+          <label for="hard">hard</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Numbering Systems</legend>
+        <div>
+          <input type="checkbox" name="numbering-system" id="binary" value="binary" />
+          <label for="binary">binary</label>
+        </div>
+        <div>
+          <input type="checkbox" name="numbering-system" id="decimal" value="decimal" checked />
+          <label for="decimal">decimal</label>
+        </div>
+        <div>
+          <input type="checkbox" name="numbering-system" id="hexadecimal" value="hexadecimal" checked />
+          <label for="hexadecimal">hexadecimal</label>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend>Exercise Count</legend>
+        <div>
+          <input type="radio" name="exercise-count" id="five" value="5" checked />
+          <label for="five">5</label>
+        </div>
+        <div>
+          <input type="radio" name="exercise-count" id="ten" value="10" />
+          <label for="ten">10</label>
+        </div>
+        <div>
+          <input type="radio" name="exercise-count" id="twenty-five" value="25" />
+          <label for="twenty-five">25</label>
+        </div>
+      </fieldset>
+      <button type="submit">
+        Generate New Excercises
+      </button>
+    </form>
+  </section>
+  <section>
+    <div id="excercises">
+
+    </div>
+  </section>
+  <noscript>Please enable Javascript to see the page</noscript>
+  <script src="./index.bundle.js"></script>
+</body>
+
+</html>
